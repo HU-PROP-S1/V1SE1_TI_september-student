@@ -1,4 +1,4 @@
-# Elektronica - Keypad Demo
+# Elektronica - Keypad
 from machine import Pin, ADC
 from utime import sleep_ms
 
@@ -17,14 +17,10 @@ def read_keypad():
     # Map the ADC value to a key
     if adc_value < 1000:
         return "Key 1"
-    elif adc_value < 10000:
-        return "Key 2"
-    elif adc_value < 25000:
-        return "Key 3"
-    elif adc_value < 40000:
-        return "Key 4"
-    elif adc_value < 60000:
-        return "Key 5"
+    # elif ...:
+    #
+    # (!) voeg hier de code voor de andere buttons toe
+    #
     else:
         return "No key"
 
