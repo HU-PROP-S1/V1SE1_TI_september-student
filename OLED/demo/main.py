@@ -5,7 +5,7 @@ import time
 WIDTH =128 
 HEIGHT= 64
 
-i2c=SoftI2C(scl=Pin(9, Pin.PULL_UP),sda=Pin(8, Pin.PULL_UP))
+i2c=SoftI2C(scl=Pin(5, Pin.PULL_UP),sda=Pin(4, Pin.PULL_UP))
 oled = SSD1306_I2C(WIDTH,HEIGHT,i2c)
 
 def main():
