@@ -48,8 +48,6 @@ def main():
                 # Set the Scrolling speed. Here it is 100mS.
                 sleep_ms(100)
 
-        print(dir(display.framebuf.FrameBuffer))  # Debug output to see available methods
-
 
 if __name__ == "__main__":
     main()
