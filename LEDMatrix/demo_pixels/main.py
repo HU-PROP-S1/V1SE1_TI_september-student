@@ -14,7 +14,7 @@ Aansluiting is als volgt [LED Matrix naar Pico]:
 from machine import Pin, SPI
 from time import sleep_ms
 
-# Import de max7219 library - deze moet dus al op je pico staan. Is te vinden in de lib map.
+# Import de max7219 library - deze moet dus al op je pico staan. Is te vinden in de 'driver' map.
 import max7219
 
 # Intialiseer SPI protocol
