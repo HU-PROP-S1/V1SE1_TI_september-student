@@ -1,15 +1,15 @@
-// Demo to control a sprite with a variable resistor (100K potentiometer)
+# Demo to control a sprite with a variable resistor (100K potentiometer)
 from machine import Pin, SoftI2C, ADC  # SoftI2C is software I2C; hardware I2C kan ook (sneller)
 from ssd1306 import SSD1306_I2C
 from framebuf import FrameBuffer, MONO_HLSB
 import time
 import math
 
-WIDTH  = 128
+WIDTH = 128
 HEIGHT = 64
 
 # I2C en OLED
-i2c  = SoftI2C(scl=Pin(5, Pin.PULL_UP), sda=Pin(4, Pin.PULL_UP))
+i2c = SoftI2C(scl=Pin(5, Pin.PULL_UP), sda=Pin(4, Pin.PULL_UP))
 oled = SSD1306_I2C(WIDTH, HEIGHT, i2c)
 
 # Potmeter op ADC0 (GP26)
@@ -35,6 +35,7 @@ sprite_bytes = bytearray([
 ])
 sprite = FrameBuffer(sprite_bytes, SPRITE_W, SPRITE_H, MONO_HLSB)
 
+
 def read_adc_scaled(adc, out_max):
     """Lees ADC (0..65535) en schaal naar 0..out_max (int). Met eenvoudige oversampling."""
     s = 0
@@ -43,8 +44,10 @@ def read_adc_scaled(adc, out_max):
     val = s // 8
     return (val * out_max) // 65535
 
+
 def clamp(v, lo, hi):
     return lo if v < lo else (hi if v > hi else v)
+
 
 def main():
     # EMA (exponential moving average) voor soepele X-positie
@@ -60,7 +63,7 @@ def main():
     while True:
         # Meet potmeter en filter
         raw_x = read_adc_scaled(adc_x, 1000)  # hogere resolutie vóór normaliseren
-        x_target = raw_x / 1000.0             # 0..1
+        x_target = raw_x / 1000.0  # 0..1
         x_norm = (1 - alpha) * x_norm + alpha * x_target
 
         # Schaal naar pixelpositie met marge voor spritebreedte
@@ -69,7 +72,7 @@ def main():
 
         # Y bepalen: sinusbeweging (of gebruik een tweede potmeter)
         ms = time.ticks_diff(time.ticks_ms(), t0)
-        t  = ms / 1000.0  # sec
+        t = ms / 1000.0  # sec
         # (Als je een tweede potmeter gebruikt, vervang onderstaande 3 regels door:)
         # y = read_adc_scaled(adc_y, HEIGHT - SPRITE_H)
         amplitude = (HEIGHT - SPRITE_H) / 2
@@ -96,6 +99,7 @@ def main():
 
         # ~30 FPS-ish; pas aan naar smaak.
         time.sleep(0.03)
+
 
 if __name__ == "__main__":
     main()
